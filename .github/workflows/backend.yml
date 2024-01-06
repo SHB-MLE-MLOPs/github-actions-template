@@ -84,7 +84,7 @@ jobs:
         run: |
           $kaggleDir = "C:\Users\runneradmin\.kaggle"
           New-Item -ItemType Directory -Path $kaggleDir -Force
-          '{ "username": "KAGGLE_USERNAME", "key": "KAGGLE_KEY" }' | Out-File -FilePath "$kaggleDir\kaggle.json" -Force
+          '{ "username": "sbodjona", "key": "bafded974dc44f4938dbfea396a177f4" }' | Out-File -FilePath "$kaggleDir\kaggle.json" -Force
           # icacls "$kaggleDir\kaggle.json" /inheritance:r
           # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
       
