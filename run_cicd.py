@@ -1,1 +1,1 @@
-run_cicd = 0
+run_cicd = 1
