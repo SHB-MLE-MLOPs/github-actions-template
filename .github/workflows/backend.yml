@@ -72,11 +72,11 @@ jobs:
       
       - name: Setup Kaggle
         run: |
-          $kaggleDir = 'C:\Users\runneradmin\.kaggle' # Join-Path $env:USERPROFILE '.kaggle'
+          $kaggleDir = 'C:\Users\runneradmin\.kaggle'
           New-Item -ItemType Directory -Path $kaggleDir -Force
-          '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Set-Content (Join-Path $kaggleDir 'kaggle.json') -Force
-          (Get-Item (Join-Path $kaggleDir 'kaggle.json')).Attributes = 'Hidden'
-          (Get-Item (Join-Path $kaggleDir 'kaggle.json')).Attributes += 'ReadOnly'
+          '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Set-Content "$kaggleDir\kaggle.json" -Force
+          (Get-Item "$kaggleDir\kaggle.json").Attributes = 'Hidden'
+          (Get-Item "$kaggleDir\kaggle.json").Attributes += 'ReadOnly'
 
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
