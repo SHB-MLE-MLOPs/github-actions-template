@@ -38,7 +38,6 @@ jobs:
     env:
       KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
       KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
-      # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
       - name: checkout code 
@@ -83,9 +82,9 @@ jobs:
         run: |
           $kaggleDir = "C:\Users\runneradmin\.kaggle"
           New-Item -ItemType Directory -Path $kaggleDir -Force
-          '{ "username": "KAGGLE_USERNAME", "key": "KAGGLE_KEY" }' | Out-File -FilePath "$kaggleDir\kaggle.json" -Force
-          icacls "$kaggleDir\kaggle.json" /inheritance:r
-          # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
+          '{ "username": "KAGGLE_USERNAME", "key": "KAGGLE_KEY" }' | Out-File -FilePath "C:\Users\runneradmin\.kaggle\kaggle.json" -Force
+          icacls "C:\Users\runneradmin\.kaggle\kaggle.json" /inheritance:r
+          icacls "C:\Users\runneradmin\.kaggle\kaggle.json" /grant:r "$($env:USERNAME):(R)"
       
       # - name: Setup Kaggle for Linux
       #   run: |
