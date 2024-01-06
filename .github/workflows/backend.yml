@@ -67,10 +67,6 @@ jobs:
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
         run: |
-          # fetch data from kaggle site
-          kaggle competitions download -c titanic -p ./classification_model/datasets
-          # unzip data - for windows: use Windows Command Prompt (CMD) without invoking PowerShell
-          tar -xf classification_model/datasets/titanic.zip -C classification_model/datasets
           tox run
 
       # - name: build ML model - checks, fetch data, train and test model
