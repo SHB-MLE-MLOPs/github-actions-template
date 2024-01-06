@@ -44,7 +44,7 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
       
-      - name: prepare python virtual environement - create, activate and upgarde pip
+      - name: prepare python virtual environement
         shell: pwsh
         run: |
           python -m venv venv
