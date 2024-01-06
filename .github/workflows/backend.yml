@@ -51,13 +51,12 @@ jobs:
           .\venv\Scripts\activate
           # source venv/bin/activate # for Linux
           # .\venv\Scripts\activate # for windows
-          pip install --upgrade pip
       
       - name: install and upgrade tox 
         shell: pwsh
         run: |
-          pip install --user tox
-          pip install --upgrade tox
+          python.exe -m pip install --user tox
+          python.exe -m pip install --upgrade tox
 
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
