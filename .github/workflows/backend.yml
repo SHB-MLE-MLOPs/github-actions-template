@@ -38,7 +38,7 @@ jobs:
     env:
       KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
       KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
-      GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
+      # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
       - name: checkout code 
