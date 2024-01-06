@@ -34,11 +34,11 @@ jobs:
       matrix:
         python-version: [3.11, 3.12]
     
-    # define the environment variable for KAGGLE account
-    env:
-      KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
-      KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
-      # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
+    # # define the environment variable for KAGGLE account
+    # env:
+    #   KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
+    #   KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
+    #   # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
       - name: checkout code 
@@ -63,12 +63,19 @@ jobs:
         run: |
           python.exe -m pip install --user tox
           python.exe -m pip install --upgrade tox
-      
+
       - name: create folder and copy kaggle.json
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
           Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle\ -Force
+      
+      - name: Setup Kaggle
+        run: |
+          $kaggleDir = Join-Path $env:USERPROFILE '.kaggle'
+          New-Item -ItemType Directory -Path $kaggleDir -Force
+          '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Set-Content (Join-Path $kaggleDir 'kaggle.json') -Force
+          (Get-Item (Join-Path $kaggleDir 'kaggle.json')).Attributes = 'Hidden'
 
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
