@@ -58,9 +58,10 @@ jobs:
           # source venv/bin/activate # for Linux
           # .\venv\Scripts\activate # for windows
       
-      - name: install and upgrade tox 
+      - name: install and upgrade pip, tox and kaggle 
         shell: pwsh
         run: |
+          python.exe -m pip install --upgrade pip
           python.exe -m pip install --user tox
           python.exe -m pip install --upgrade tox
           python.exe -m pip install --user kaggle
@@ -73,13 +74,24 @@ jobs:
       #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
       #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
 
+      # - shell: bash
+      #   run: |
+      #     mkdir old/path/new-subdir
+      #     mv old/path/* old/path/new-subdir/
+
       - name: Setup Kaggle
         run: |
           $kaggleDir = 'C:\Users\runneradmin\.kaggle'
           New-Item -ItemType Directory -Path $kaggleDir -Force
-          $jsonContent = '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }'
-          $jsonContent | Out-File -FilePath $kaggleDir\kaggle.json -Force
-          (Get-Item "$kaggleDir\kaggle.json").Attributes = 'Hidden', 'ReadOnly'
+          '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Out-File -FilePath "$kaggleDir\kaggle.json" -Force
+          icacls "$kaggleDir\kaggle.json" /inheritance:r
+          icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
+      
+      # - name: Setup Kaggle for Linux
+      #   run: |
+      #     mkdir $HOME/.kaggle
+      #     echo '{"username":"${{ secrets.KAGGLE_USERNAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > $HOME/.kaggle/kaggle.json
+      #     chmod 600 $HOME/.kaggle/kaggle.json
 
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
