@@ -74,7 +74,7 @@ jobs:
         run: |
           $kaggleDir = 'C:\Users\runneradmin\.kaggle' # Join-Path $env:USERPROFILE '.kaggle'
           New-Item -ItemType Directory -Path $kaggleDir -Force
-          '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Set-Content (Join-Path $kaggleDir 'kaggle.json') -Force
+          '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Set-Content "$kaggleDir\kaggle.json" -Force
           # (Get-Item (Join-Path $kaggleDir 'kaggle.json')).Attributes = 'Hidden'
           # (Get-Item (Join-Path $kaggleDir 'kaggle.json')).Attributes += 'ReadOnly'
 
