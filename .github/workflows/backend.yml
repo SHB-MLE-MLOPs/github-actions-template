@@ -12,10 +12,10 @@ name: Build BACKEND
 on:
   push:
     branches:
-      - run_cicd
-  # pull_request:
-  #   branches:
-  #     - main
+      - main
+  pull_request:
+    branches:
+      - main
   # schedule: # frequence to launch actions. see this link https://crontab.guru/
   #   - cron: "0 0 * * 1" # at 00:00 on Monday
 
@@ -32,7 +32,7 @@ jobs:
     
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
+        python-version: [3.12]
 
     steps:
       - name: checkout code 
