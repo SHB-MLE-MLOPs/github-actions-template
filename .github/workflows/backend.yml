@@ -36,8 +36,8 @@ jobs:
     
     # define the environment variable for KAGGLE account
     env:
-      KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
-      KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
+      KAGGLE_USERNAME_V: ${{secrets.KAGGLE_USERNAME}}
+      KAGGLE_KEY_V: ${{secrets.KAGGLE_KEY}}
       # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
