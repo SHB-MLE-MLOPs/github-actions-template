@@ -1,0 +1,35 @@
+name: fetch_data
+run_id: commands[0]
+env COMSPEC: C:\WINDOWS\system32\cmd.exe
+env NUMBER_OF_PROCESSORS: 4
+env PATHEXT: .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
+env PROCESSOR_ARCHITECTURE: AMD64
+env PROGRAMDATA: C:\ProgramData
+env PROGRAMFILES: C:\Program Files
+env PROGRAMFILES(X86): C:\Program Files (x86)
+env SYSTEMDRIVE: C:
+env SYSTEMROOT: C:\WINDOWS
+env TEMP: C:\Users\HEZIEW~1\AppData\Local\Temp
+env TMP: C:\Users\HEZIEW~1\AppData\Local\Temp
+env USERPROFILE: C:\Users\HezieweSerge
+env PATH: C:\Users\HezieweSerge\prod\github-actions-template\backend\.tox\train_test_model\Scripts;C:\Program Files\Python311\Scripts\;C:\Program Files\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\HezieweSerge\scoop\shims;C:\Users\HezieweSerge\AppData\Local\Microsoft\WindowsApps;C:\Users\HezieweSerge\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2023.2.3\bin;;C:\Users\HezieweSerge\AppData\Roaming\Python\Python311\Scripts
+env PIP_DISABLE_PIP_VERSION_CHECK: 1
+env PYTHONIOENCODING: utf-8
+env PYTHONPATH: .
+env PYTHONHASHSEED: 0
+env TOX_ENV_NAME: fetch_data
+env TOX_WORK_DIR: C:\Users\HezieweSerge\prod\github-actions-template\backend\.tox
+env TOX_ENV_DIR: C:\Users\HezieweSerge\prod\github-actions-template\backend\.tox\train_test_model
+env VIRTUAL_ENV: C:\Users\HezieweSerge\prod\github-actions-template\backend\.tox\train_test_model
+env COLUMNS: 168
+env LINES: 44
+metadata pid: 14988
+cwd: C:\Users\HezieweSerge\prod\github-actions-template\backend
+allow: C:\Users\HezieweSerge\prod\github-actions-template\backend\.tox\train_test_model\Scripts\*:tar
+cmd: kaggle competitions download -c titanic -p ./classification_model/datasets
+exit_code: 0
+Downloading titanic.zip to ./classification_model/datasets
+
+
+standard error:
+  0%|          | 0.00/34.1k [00:00<?, ?B/s]  0%|          | 0.00/34.1k [00:00<?, ?B/s]
