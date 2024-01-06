@@ -35,9 +35,10 @@ jobs:
         python-version: [3.11, 3.12]
     
     # define the environment variable for KAGGLE account
-    # env:
-    #   KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
-    #   KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
+    env:
+      KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
+      KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
+      # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
       - name: checkout code 
@@ -66,10 +67,11 @@ jobs:
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
         run: |
+          # fetch data from kaggle site
+          kaggle competitions download -c titanic -p ./classification_model/datasets
+          # unzip data - for windows: use Windows Command Prompt (CMD) without invoking PowerShell
+          tar -xf classification_model/datasets/titanic.zip -C classification_model/datasets
           tox run
-          with:
-            KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
-            KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
 
       # - name: build ML model - checks, fetch data, train and test model
       #   shell: pwsh
@@ -78,8 +80,5 @@ jobs:
       #     tox run -e stylechecks
       #     tox run -e lint
       #     tox run -e fetch_data
-      #     with:
-      #       KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
-      #       KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
       #     tox run -e train_model
       #     tox run -e test_model
