@@ -64,15 +64,15 @@ jobs:
           python.exe -m pip install --user tox
           python.exe -m pip install --upgrade tox
 
-      - name: create folder and copy kaggle.json
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
-          Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle\ -Force
+      # - name: create folder and copy kaggle.json
+      #   shell: pwsh
+      #   run: |
+      #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
+      #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle\ -Force
       
       - name: Setup Kaggle
         run: |
-          $kaggleDir = Join-Path $env:USERPROFILE '.kaggle'
+          $kaggleDir = C:\Users\runneradmin\.kaggle # Join-Path $env:USERPROFILE '.kaggle'
           New-Item -ItemType Directory -Path $kaggleDir -Force
           '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }' | Set-Content (Join-Path $kaggleDir 'kaggle.json') -Force
           (Get-Item (Join-Path $kaggleDir 'kaggle.json')).Attributes = 'Hidden'
