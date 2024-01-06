@@ -64,18 +64,18 @@ jobs:
           python.exe -m pip install --user tox
           python.exe -m pip install --upgrade tox
 
-      - name: create folder and copy kaggle.json
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
-          Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
-
       # - name: create folder and copy kaggle.json
       #   shell: pwsh
       #   run: |
-      #     $kaggleDir = 'C:\Users\runneradmin\.kaggle'
-      #     New-Item -ItemType Directory -Path $kaggleDir -Force
-      #     Move-Item .\kaggle.json $kaggleDir -Force
+      #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
+      #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
+
+      - name: create folder and copy kaggle.json
+        shell: pwsh
+        run: |
+          $kaggleDir = C:\Users\runneradmin\.kaggle
+          New-Item -ItemType Directory -Path $kaggleDir -Force
+          Move-Item .\kaggle.json $kaggleDir -Force
       
       # - name: Setup Kaggle
       #   run: |
