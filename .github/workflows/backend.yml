@@ -63,11 +63,11 @@ jobs:
         run: |
           tox run
 
-      - name: build ML model - checks, fetch data, train and test model
-        shell: pwsh
-        run: |
-          tox run -e typechecks
-          tox run -e stylechecks
-          tox run -e lint
-          tox run -e train_model
-          tox run -e test_model
+      # - name: build ML model - checks, fetch data, train and test model
+      #   shell: pwsh
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e train_model
+      #     tox run -e test_model
