@@ -75,8 +75,9 @@ jobs:
           $kaggleDir = 'C:\Users\runneradmin\.kaggle'
           New-Item -ItemType Directory -Path $kaggleDir -Force
           $jsonContent = '{ "username": "${{ secrets.KAGGLE_USERNAME }}", "key": "${{ secrets.KAGGLE_KEY }}" }'
-          $jsonContent | Out-File -FilePath $kaggleDir kaggle.json -Force
-          (Get-Item "$kaggleDir\kaggle.json").Attributes = 'Hidden', 'ReadOnly'
+          Move-Item $jsonContent C:\Users\runneradmin\.kaggle -Force
+          # $jsonContent | Out-File -FilePath $kaggleDir kaggle.json -Force
+          # (Get-Item "$kaggleDir\kaggle.json").Attributes = 'Hidden', 'ReadOnly'
 
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
