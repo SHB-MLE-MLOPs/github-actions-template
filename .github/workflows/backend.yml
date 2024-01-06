@@ -25,7 +25,7 @@ jobs:
     name: Checks, Fetch data, Train and Test ML model # define the name of job
     # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here
     # runs-on: macos-latest # define the machine where the code will run, MacOS here
-    runs-on: windows-latest # define the machine where the code will run, Windows here
+    runs-on: windows-latest # define the machine where the code will run, Windows here   
     defaults:
       run:
         working-directory: ./backend/
@@ -36,8 +36,8 @@ jobs:
     
     # define the environment variable for KAGGLE account
     env:
-      KAGGLE_USERNAME_V: ${{secrets.KAGGLE_USERNAME}}
-      KAGGLE_KEY_V: ${{secrets.KAGGLE_KEY}}
+      KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
+      KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
       # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
@@ -63,6 +63,12 @@ jobs:
         run: |
           python.exe -m pip install --user tox
           python.exe -m pip install --upgrade tox
+      
+      - name: create folder and copy kaggle.json
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
+          Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle\ -Force
 
       - name: build ML model - checks, fetch data, train and test model
         shell: pwsh
