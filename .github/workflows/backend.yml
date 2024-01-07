@@ -5,45 +5,35 @@ name: Build BACKEND
 # on:
 #   push:
 #     branches:
-#       - runcicd
+#       - build_backend
 #       - 'releases/**'
 
 # when or what event needs for begin running the code
 on:
-  # push:
-  #   branches:
-  #     - run_cicd
+  push:
+    branches:
+      - main
   pull_request:
     branches:
-      - run_cicd
+      - main
   # schedule: # frequence to launch actions. see this link https://crontab.guru/
   #   - cron: "0 0 * * 1" # at 00:00 on Monday
 
 # jobs you want to run
 jobs:
   ML-model-building-actions:
-    # name: Checks, Fetch data, Train and Test ML model - Windows # define the name of job
-    # runs-on: windows-latest # define the machine where the code will run, Windows here   
-    # defaults:
-    #   run:
-    #     working-directory: ./backend/
-    
-    name: Checks, Fetch data, Train and Test ML model - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    name: Checks, Fetch data, Train and Test ML model # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here
+    # runs-on: macos-latest # define the machine where the code will run, MacOS here
+    runs-on: windows-latest # define the machine where the code will run, Windows here
     defaults:
       run:
         working-directory: ./backend/
     
-    # name: Checks, Fetch data, Train and Test ML model - Macos # define the name of job
-    # runs-on: macos-latest # define the machine where the code will run, MacOS here
-    # defaults:
-    #   run:
-    #     working-directory: ./backend/
-    
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
-  
+        python-version: [3.12]
+
     steps:
       - name: checkout code 
         uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
@@ -54,78 +44,31 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
       
-      # - name: prepare python virtual environement - Windows
-      #   shell: pwsh
-      #   run: |
-      #     python -m venv venv
-      #     .\venv\Scripts\activate
-      
-      - name: prepare python virtual environement - Linux  
-        shell: bash
+      - name: prepare python virtual environement
+        shell: pwsh
         run: |
           python -m venv venv
-          source venv/bin/activate
+          .\venv\Scripts\activate
+          # source venv/bin/activate # for Linux
+          # .\venv\Scripts\activate # for windows
       
-      # - name: install and upgrade pip, tox and kaggle - Windows
-      #   shell: pwsh
-      #   run: |
-      #     python.exe -m pip install --upgrade pip
-      #     python.exe -m pip install --user tox
-      #     python.exe -m pip install --upgrade tox
-      #     python.exe -m pip install --user kaggle
-      #     python.exe -m pip install --upgrade kaggle
-      
-      - name: install and upgrade pip, tox and kaggle - Linux
-        shell: bash
+      - name: install and upgrade tox 
+        shell: pwsh
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install --user tox
-          python -m pip install --upgrade tox
-          python -m pip install --user kaggle
-          python -m pip install --upgrade kaggle
+          python.exe -m pip install --user tox
+          python.exe -m pip install --upgrade tox
 
-      # - name: create folder and copy kaggle.json - Windows
-      #   shell: pwsh
-      #   run: |
-      #     $kaggleDir = "C:\Users\runneradmin\.kaggle"
-      #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
-      #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
-      #     icacls "$kaggleDir\kaggle.json" /inheritance:r
-      #     # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
-
-      - name: create folder and copy kaggle.json - Linux
-        shell: bash
-        run: |
-          mkdir /home/runner/.kaggle # ~/.kaggle
-          mv ./kaggle.json /home/runner/.kaggle/ # ./kaggle.json ~/.kaggle/
-          chmod 600 /home/runner/.kaggle/kaggle.json # ~/.kaggle/kaggle.json
-
-      # - name: build ML model - checks, fetch data, train and test model - Windows
-      #   shell: pwsh
-      #   run: |
-      #     tox run
-      
-      - name: build ML model - checks, fetch data, train and test model - Linux
-        shell: bash
+      - name: build ML model - checks, fetch data, train and test model
+        shell: pwsh
         run: |
           tox run
 
-      # - name: build ML model - checks, fetch data, train and test model - Windows
-      #   shell: pwsh
-      #   run: |
-      #     tox run -e typechecks
-      #     tox run -e stylechecks
-      #     tox run -e lint
-      #     tox run -e fetch_data
-      #     tox run -e train_model
-      #     tox run -e test_model
-
-      # - name: build ML model - checks, fetch data, train and test model - Linux
-      #   shell: bash
-      #   run: |
-      #     tox run -e typechecks
-      #     tox run -e stylechecks
-      #     tox run -e lint
-      #     tox run -e fetch_data
-      #     tox run -e train_model
-      #     tox run -e test_model
+      - name: build ML model - checks, fetch data, train and test model
+        shell: pwsh
+        run: |
+          tox run -e typechecks
+          tox run -e stylechecks
+          tox run -e lint
+          # tox run -e fetch_data
+          tox run -e train_model
+          tox run -e test_model
