@@ -5,7 +5,7 @@ name: Build BACKEND
 # on:
 #   push:
 #     branches:
-#       - build_backend
+#       - main
 #       - 'releases/**'
 
 # when or what event needs for begin running the code
