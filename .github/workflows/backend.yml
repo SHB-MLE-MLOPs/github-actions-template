@@ -10,9 +10,9 @@ name: Build BACKEND
 
 # when or what event needs for begin running the code
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   pull_request:
     branches:
       - main
