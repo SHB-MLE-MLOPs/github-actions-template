@@ -101,7 +101,7 @@ jobs:
         shell: bash
         run: |
           mkdir /home/runner/.kaggle
-          mv ./kaggle.json /home/runner/.kaggle/
+          mv ./kaggle.json /home/runner/.kaggle
 
       # - name: Setup Kaggle - Windows
       #   shell: pwsh
