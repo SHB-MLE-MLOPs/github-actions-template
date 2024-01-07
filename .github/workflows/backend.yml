@@ -100,8 +100,8 @@ jobs:
       - name: create folder and copy kaggle.json - Linux
         shell: bash
         run: |
-          os.mkdir(/home/runner/.kaggle)
-          mv ./kaggle.json /home/runner/.kaggle
+          mkdir /home/ubuntu/.kaggle
+          mv ./kaggle.json /home/ubuntu/.kaggle
 
       # - name: Setup Kaggle - Windows
       #   shell: pwsh
