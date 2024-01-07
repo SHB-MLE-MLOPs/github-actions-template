@@ -91,7 +91,7 @@ jobs:
       #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
       #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
       #     icacls "$kaggleDir\kaggle.json" /inheritance:r
-      #     icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
+      #     # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
 
       - name: create folder and copy kaggle.json - Linux
         shell: bash
