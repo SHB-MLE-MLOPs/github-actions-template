@@ -22,13 +22,23 @@ on:
 # jobs you want to run
 jobs:
   ML-model-building-actions:
-    name: Checks, Fetch data, Train and Test ML model # define the name of job
-    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here
-    # runs-on: macos-latest # define the machine where the code will run, MacOS here
+    name: Checks, Fetch data, Train and Test ML model - Windows # define the name of job
     runs-on: windows-latest # define the machine where the code will run, Windows here   
     defaults:
       run:
         working-directory: ./backend/
+    
+    # name: Checks, Fetch data, Train and Test ML model - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    # defaults:
+    #   run:
+    #     working-directory: ./backend/
+    
+    # name: Checks, Fetch data, Train and Test ML model - Macos # define the name of job
+    # runs-on: macos-latest # define the machine where the code will run, MacOS here
+    # defaults:
+    #   run:
+    #     working-directory: ./backend/
     
     strategy:
       matrix:
@@ -50,15 +60,19 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
       
-      - name: prepare python virtual environement
+      - name: prepare python virtual environement - Windows
         shell: pwsh
         run: |
           python -m venv venv
           .\venv\Scripts\activate
-          # source venv/bin/activate # for Linux
-          # .\venv\Scripts\activate # for windows
       
-      - name: install and upgrade pip, tox and kaggle 
+      # - name: prepare python virtual environement - Linux  
+      #   shell: bash
+      #   run: |
+      #     python -m venv venv
+      #     source venv/bin/activate # for Linux
+      
+      - name: install and upgrade pip, tox and kaggle - Windows
         shell: pwsh
         run: |
           python.exe -m pip install --upgrade pip
@@ -66,38 +80,54 @@ jobs:
           python.exe -m pip install --upgrade tox
           python.exe -m pip install --user kaggle
           python.exe -m pip install --upgrade kaggle
+      
+      # - name: install and upgrade pip, tox and kaggle - Linux
+      #   shell: bash
+      #   run: |
+      #     python.exe -m pip install --upgrade pip
+      #     python.exe -m pip install --user tox
+      #     python.exe -m pip install --upgrade tox
+      #     python.exe -m pip install --user kaggle
+      #     python.exe -m pip install --upgrade kaggle
 
-      # - name: create folder and copy kaggle.json
+      # - name: create folder and copy kaggle.json - Windows
       #   shell: pwsh
       #   run: |
       #     $kaggleDir = "C:\Users\runneradmin\.kaggle"
       #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
       #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
 
-      # - name: create folder and copy kaggle.json
-      # - shell: bash
+      # - name: create folder and copy kaggle.json - Linux
+      #   shell: bash
       #   run: |
       #     mkdir old/path/new-subdir
-      #     mv old/path/* old/path/new-subdir/
+      #     mv ./kaggle.json old/path/new-subdir/
 
-      - name: Setup Kaggle for Windows
+      - name: Setup Kaggle - Windows
+        shell: pwsh
         run: |
           $kaggleDir = "C:\Users\runneradmin\.kaggle"
           New-Item -ItemType Directory -Path $kaggleDir -Force
-          '{ "username": "sbodjona", "key": "bafded974dc44f4938dbfea396a177f4" }' | Out-File -FilePath "$kaggleDir\kaggle.json" -Force
+          '{ "username": "KAGGLE_USERNAME", "key": "KAGGLE_KEY" }' | Out-File -FilePath "$kaggleDir\kaggle.json" -Force
           # icacls "$kaggleDir\kaggle.json" /inheritance:r
           # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
       
-      # - name: Setup Kaggle for Linux
+      # - name: Setup Kaggle - Linux
+      #   shell: bash
       #   run: |
       #     mkdir $HOME/.kaggle
       #     echo '{"username":"${{ secrets.KAGGLE_USERNAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > $HOME/.kaggle/kaggle.json
       #     chmod 600 $HOME/.kaggle/kaggle.json
 
-      - name: build ML model - checks, fetch data, train and test model
+      - name: build ML model - checks, fetch data, train and test model - Windows
         shell: pwsh
         run: |
           tox run
+      
+      # - name: build ML model - checks, fetch data, train and test model - Linux
+      #   shell: bash
+      #   run: |
+      #     tox run
 
       # - name: build ML model - checks, fetch data, train and test model
       #   shell: pwsh
