@@ -115,9 +115,9 @@ jobs:
       - name: Setup Kaggle - Linux
         shell: bash
         run: |
-          mkdir $HOME/.kaggle
-          echo '{"username":"${{ secrets.KAGGLE_USERNAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > $HOME/.kaggle/kaggle.json
-          chmod 600 $HOME/.kaggle/kaggle.json
+          mkdir $home/runner/.kaggle
+          echo '{"username":"${{ secrets.KAGGLE_USERNAME_V }}","key":"${{ secrets.KAGGLE_KEY_V }}"}' > $home/runner/.kaggle/kaggle.json
+          chmod 600 $home/runner/.kaggle/kaggle.json
 
       # - name: build ML model - checks, fetch data, train and test model - Windows
       #   shell: pwsh
