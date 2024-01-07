@@ -96,12 +96,15 @@ jobs:
       #     $kaggleDir = "C:\Users\runneradmin\.kaggle"
       #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
       #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
+      #     icacls "$kaggleDir\kaggle.json" /inheritance:r
+      #     icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
 
-      # - name: create folder and copy kaggle.json - Linux
-      #   shell: bash
-      #   run: |
-      #     mkdir /home/runner/.kaggle # ~/.kaggle
-      #     mv ./kaggle.json /home/runner/.kaggle/ # ./kaggle.json ~/.kaggle/
+      - name: create folder and copy kaggle.json - Linux
+        shell: bash
+        run: |
+          mkdir /home/runner/.kaggle # ~/.kaggle
+          mv ./kaggle.json /home/runner/.kaggle/ # ./kaggle.json ~/.kaggle/
+          chmod 600 /home/runner/.kaggle/kaggle.json # ~/.kaggle/kaggle.json
 
       # - name: Setup Kaggle - Windows
       #   shell: pwsh
@@ -112,12 +115,12 @@ jobs:
       #     # icacls "$kaggleDir\kaggle.json" /inheritance:r
       #     # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
       
-      - name: Setup Kaggle - Linux
-        shell: bash
-        run: |
-          mkdir ~/.kaggle
-          echo '{"username":"${{ secrets.KAGGLE_USERNAME_V }}","key":"${{ secrets.KAGGLE_KEY_V }}"}' > ~/.kaggle/kaggle.json
-          chmod 600 ~/.kaggle/kaggle.json
+      # - name: Setup Kaggle - Linux
+      #   shell: bash
+      #   run: |
+      #     mkdir ~/.kaggle
+      #     echo '{"username":"${{ secrets.KAGGLE_USERNAME_V }}","key":"${{ secrets.KAGGLE_KEY_V }}"}' > ~/.kaggle/kaggle.json
+      #     chmod 600 ~/.kaggle/kaggle.json
 
       # - name: build ML model - checks, fetch data, train and test model - Windows
       #   shell: pwsh
