@@ -84,11 +84,11 @@ jobs:
       - name: install and upgrade pip, tox and kaggle - Linux
         shell: bash
         run: |
-          python.exe -m pip install --upgrade pip
-          python.exe -m pip install --user tox
-          python.exe -m pip install --upgrade tox
-          python.exe -m pip install --user kaggle
-          python.exe -m pip install --upgrade kaggle
+          python -m pip install --upgrade pip
+          python -m pip install --user tox
+          python -m pip install --upgrade tox
+          python -m pip install --user kaggle
+          python -m pip install --upgrade kaggle
 
       # - name: create folder and copy kaggle.json - Windows
       #   shell: pwsh
