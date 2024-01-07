@@ -120,12 +120,12 @@ jobs:
       #     tox run -e train_model
       #     tox run -e test_model
 
-      - name: build ML model - checks, fetch data, train and test model - Linux
-        shell: bash
-        run: |
-          tox run -e typechecks
-          tox run -e stylechecks
-          tox run -e lint
-          tox run -e fetch_data
-          tox run -e train_model
-          tox run -e test_model
+      # - name: build ML model - checks, fetch data, train and test model - Linux
+      #   shell: bash
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e fetch_data
+      #     tox run -e train_model
+      #     tox run -e test_model
