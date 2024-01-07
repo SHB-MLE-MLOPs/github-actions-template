@@ -44,11 +44,11 @@ jobs:
       matrix:
         python-version: [3.11, 3.12]
     
-    # define the environment variable for KAGGLE account
-    env:
-      KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
-      KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
-      # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
+    # # define the environment variable for KAGGLE account
+    # env:
+    #   KAGGLE_USERNAME: ${{secrets.KAGGLE_USERNAME}}
+    #   KAGGLE_KEY: ${{secrets.KAGGLE_KEY}}
+    #   # GEMFURY_PUSH_URL: ${{secrets.GEMFURY_PUSH_URL}}
 
     steps:
       - name: checkout code 
