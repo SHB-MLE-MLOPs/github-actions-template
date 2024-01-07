@@ -113,11 +113,11 @@ jobs:
       #     # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
       
       - name: Setup Kaggle - Linux
-        shell: bash
+        # shell: bash
         run: |
-          mkdir /home/runner/.kaggle
-          echo '{"username":"${{ secrets.KAGGLE_USERNAME_V }}","key":"${{ secrets.KAGGLE_KEY_V }}"}' > /home/runner/.kaggle/kaggle.json
-          chmod 600 /home/runner/.kaggle/kaggle.json
+          mkdir $HOME/.kaggle
+          echo '{"username":"${{ secrets.KAGGLE_USERNAME_V }}","key":"${{ secrets.KAGGLE_KEY_V }}"}' > $HOME/.kaggle/kaggle.json
+          chmod 600 $HOME/.kaggle/kaggle.json
 
       # - name: build ML model - checks, fetch data, train and test model - Windows
       #   shell: pwsh
