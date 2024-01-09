@@ -14,7 +14,7 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 # Package meta-data.
-NAME = 'titanic_survived_prediction_kcamille'
+NAME = 'titanic_survived_prediction_sbodjona_tp'
 DESCRIPTION = "Example classification model package from Train In Data."
 URL = "https://github.com/SHB-MLE-MLOPs/production_ML_model_deployement.git"
 EMAIL = "serge.bodjona@hotmail.com"
