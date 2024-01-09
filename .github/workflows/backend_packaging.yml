@@ -10,6 +10,9 @@ name: Package and Publish BACKEND
 
 # when or what event needs for begin running the code
 on:
+  # push:
+  #   branches:
+  #     - backend_packaging_dev
   pull_request:
     branches:
       - backend_packaging_main
