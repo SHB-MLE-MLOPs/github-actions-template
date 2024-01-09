@@ -1,0 +1,132 @@
+# name of your CICD code
+name: Package and Publish BACKEND
+
+# # when or what event needs for begin running the code
+# on:
+#   push:
+#     branches:
+#       - main
+#       - 'releases/**'
+
+# when or what event needs for begin running the code
+on:
+  pull_request:
+    branches:
+      - backend_packaging_main
+  # schedule: # frequence to launch actions. see this link https://crontab.guru/
+  #   - cron: "0 0 * * 1" # at 00:00 on Monday
+
+# jobs you want to run
+jobs:
+  ML-model-building-actions:
+    name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here   
+    defaults:
+      run:
+        working-directory: ./backend_packaging/
+    
+    # name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    # defaults:
+    #   run:
+    #     working-directory: ./backend_packaging/
+    
+    # name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Macos # define the name of job
+    # runs-on: macos-latest # define the machine where the code will run, MacOS here
+    # defaults:
+    #   run:
+    #     working-directory: ./backend_packaging/
+    
+    strategy:
+      matrix:
+        python-version: [3.12] # [3.11, 3.12]
+  
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+      
+      # Here we begin CI (Continuous Integration)
+      - name: install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{matrix.python-version}}
+      
+      - name: prepare python virtual environement - Windows
+        shell: pwsh
+        run: |
+          python -m venv venv
+          .\venv\Scripts\activate
+      
+      # - name: prepare python virtual environement - Linux  
+      #   shell: bash
+      #   run: |
+      #     python -m venv venv
+      #     source venv/bin/activate
+      
+      - name: install and upgrade pip, tox and kaggle - Windows
+        shell: pwsh
+        run: |
+          python.exe -m pip install --upgrade pip
+          python.exe -m pip install --user tox
+          python.exe -m pip install --upgrade tox
+          python.exe -m pip install --user kaggle
+          python.exe -m pip install --upgrade kaggle
+      
+      # - name: install and upgrade pip, tox and kaggle - Linux
+      #   shell: bash
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     python -m pip install --user tox
+      #     python -m pip install --upgrade tox
+      #     python -m pip install --user kaggle
+      #     python -m pip install --upgrade kaggle
+
+      - name: create folder and copy kaggle.json - Windows
+        shell: pwsh
+        run: |
+          $kaggleDir = "C:\Users\runneradmin\.kaggle"
+          New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
+          Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
+          icacls "$kaggleDir\kaggle.json" /inheritance:r
+          # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
+
+      # - name: create folder and copy kaggle.json - Linux
+      #   shell: bash
+      #   run: |
+      #     mkdir /home/runner/.kaggle # ~/.kaggle
+      #     mv ./kaggle.json /home/runner/.kaggle/ # ./kaggle.json ~/.kaggle/
+      #     chmod 600 /home/runner/.kaggle/kaggle.json # ~/.kaggle/kaggle.json
+
+      - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Windows
+        shell: pwsh
+        run: |
+          tox run
+      
+      # - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Linux
+      #   shell: bash
+      #   run: |
+      #     tox run
+
+      # - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Windows
+      #   shell: pwsh
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e fetch_data
+      #     tox run -e train_model
+      #     tox run -e test_model
+      #     tox run -e PyPI_packaging
+      #     tox run -e TestPyPI_publishing
+
+      # - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Linux
+      #   shell: bash
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e fetch_data
+      #     tox run -e train_model
+      #     tox run -e test_model
+      #     tox run -e PyPI_packaging
+      #     tox run -e TestPyPI_publishing
