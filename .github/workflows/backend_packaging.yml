@@ -22,17 +22,17 @@ on:
 # jobs you want to run
 jobs:
   ML-model-building-actions:
-    name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Windows # define the name of job
-    runs-on: windows-latest # define the machine where the code will run, Windows here   
-    defaults:
-      run:
-        working-directory: ./backend_packaging/
-    
-    # name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Linux # define the name of job
-    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    # name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Windows # define the name of job
+    # runs-on: windows-latest # define the machine where the code will run, Windows here   
     # defaults:
     #   run:
     #     working-directory: ./backend_packaging/
+    
+    name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    defaults:
+      run:
+        working-directory: ./backend_packaging/
     
     # name: Checks, Fetch data, Train, Test , Packaging and Pubishing ML model on PypiTest - Macos # define the name of job
     # runs-on: macos-latest # define the machine where the code will run, MacOS here
@@ -54,61 +54,61 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
       
-      - name: prepare python virtual environement - Windows
-        shell: pwsh
-        run: |
-          python -m venv venv
-          .\venv\Scripts\activate
-      
-      # - name: prepare python virtual environement - Linux  
-      #   shell: bash
+      # - name: prepare python virtual environement - Windows
+      #   shell: pwsh
       #   run: |
       #     python -m venv venv
-      #     source venv/bin/activate
+      #     .\venv\Scripts\activate
       
-      - name: install and upgrade pip, tox and kaggle - Windows
-        shell: pwsh
+      - name: prepare python virtual environement - Linux  
+        shell: bash
         run: |
-          python.exe -m pip install --upgrade pip
-          python.exe -m pip install --user tox
-          python.exe -m pip install --upgrade tox
-          python.exe -m pip install --user kaggle
-          python.exe -m pip install --upgrade kaggle
+          python -m venv venv
+          source venv/bin/activate
       
-      # - name: install and upgrade pip, tox and kaggle - Linux
-      #   shell: bash
+      # - name: install and upgrade pip, tox and kaggle - Windows
+      #   shell: pwsh
       #   run: |
-      #     python -m pip install --upgrade pip
-      #     python -m pip install --user tox
-      #     python -m pip install --upgrade tox
-      #     python -m pip install --user kaggle
-      #     python -m pip install --upgrade kaggle
-
-      - name: create folder and copy kaggle.json - Windows
-        shell: pwsh
-        run: |
-          $kaggleDir = "C:\Users\runneradmin\.kaggle"
-          New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
-          Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
-          icacls "$kaggleDir\kaggle.json" /inheritance:r
-          # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
-
-      # - name: create folder and copy kaggle.json - Linux
-      #   shell: bash
-      #   run: |
-      #     mkdir /home/runner/.kaggle # ~/.kaggle
-      #     mv ./kaggle.json /home/runner/.kaggle/ # ./kaggle.json ~/.kaggle/
-      #     chmod 600 /home/runner/.kaggle/kaggle.json # ~/.kaggle/kaggle.json
-
-      - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Windows
-        shell: pwsh
-        run: |
-          tox run
+      #     python.exe -m pip install --upgrade pip
+      #     python.exe -m pip install --user tox
+      #     python.exe -m pip install --upgrade tox
+      #     python.exe -m pip install --user kaggle
+      #     python.exe -m pip install --upgrade kaggle
       
-      # - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Linux
-      #   shell: bash
+      - name: install and upgrade pip, tox and kaggle - Linux
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --user tox
+          python -m pip install --upgrade tox
+          python -m pip install --user kaggle
+          python -m pip install --upgrade kaggle
+
+      # - name: create folder and copy kaggle.json - Windows
+      #   shell: pwsh
+      #   run: |
+      #     $kaggleDir = "C:\Users\runneradmin\.kaggle"
+      #     New-Item -ItemType Directory -Path C:\Users\runneradmin\.kaggle -Force
+      #     Move-Item .\kaggle.json C:\Users\runneradmin\.kaggle -Force
+      #     icacls "$kaggleDir\kaggle.json" /inheritance:r
+      #     # icacls "$kaggleDir\kaggle.json" /grant:r "$($env:USERNAME):(R)"
+
+      - name: create folder and copy kaggle.json - Linux
+        shell: bash
+        run: |
+          mkdir /home/runner/.kaggle # ~/.kaggle
+          mv ./kaggle.json /home/runner/.kaggle/ # ./kaggle.json ~/.kaggle/
+          chmod 600 /home/runner/.kaggle/kaggle.json # ~/.kaggle/kaggle.json
+
+      # - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Windows
+      #   shell: pwsh
       #   run: |
       #     tox run
+      
+      - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Linux
+        shell: bash
+        run: |
+          tox run
 
       # - name: package and pubish ML model - checks, fetch data, train, test, packaging and pubishing on PypiTest - Windows
       #   shell: pwsh
