@@ -26,19 +26,19 @@ jobs:
     # runs-on: windows-latest # define the machine where the code will run, Windows here   
     # defaults:
     #   run:
-    #     working-directory: ./api_cicd/
+    #     working-directory: ./api/
 
     name: Checks, Test and Run API - Linux # define the name of job
     runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
     defaults:
       run:
-        working-directory: ./api_cicd/
+        working-directory: ./api/
 
     # name: Checks, Test and Run API - Macos # define the name of job
     # runs-on: macos-latest # define the machine where the code will run, MacOS here
     # defaults:
     #   run:
-    #     working-directory: ./api_cicd/
+    #     working-directory: ./api/
 
     strategy:
       matrix:
@@ -80,17 +80,17 @@ jobs:
           python -m pip install --user tox
           python -m pip install --upgrade tox
 
-      # - name: package and pubish ML model - checks, test and run api - Windows
+      # - name: test and run api - checks, test and run api - Windows
       #   shell: pwsh
       #   run: |
       #     tox run
 
-      - name: package and pubish ML model - checks, test and run api - Linux
+      - name: test and run api - checks, test and run api - Linux
         shell: bash
         run: |
           tox run
 
-      # - name: package and pubish ML model - checks, test and run api - Windows
+      # - name: test and run api - checks, test and run api - Windows
       #   shell: pwsh
       #   run: |
       #     tox run -e typechecks
@@ -99,7 +99,7 @@ jobs:
       #     tox run -e test_api
       #     tox run -e run_api
 
-      # - name: package and pubish ML model - checks, test and run api - Linux
+      # - name: test and run api - checks, test and run api - Linux
       #   shell: bash
       #   run: |
       #     tox run -e typechecks
