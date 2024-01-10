@@ -26,19 +26,19 @@ jobs:
     # runs-on: windows-latest # define the machine where the code will run, Windows here   
     # defaults:
     #   run:
-    #     working-directory: ./api_cicd/
+    #     working-directory: ./api/
 
     name: Checks, Test and Run API - Linux # define the name of job
     runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
     defaults:
       run:
-        working-directory: ./api_cicd/
+        working-directory: ./api/
 
     # name: Checks, Test and Run API - Macos # define the name of job
     # runs-on: macos-latest # define the machine where the code will run, MacOS here
     # defaults:
     #   run:
-    #     working-directory: ./api_cicd/
+    #     working-directory: ./api/
 
     strategy:
       matrix:
