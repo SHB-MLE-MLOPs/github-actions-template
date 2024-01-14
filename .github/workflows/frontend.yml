@@ -22,17 +22,17 @@ on:
 # jobs you want to run
 jobs:
   ML-model-building-actions:
-    # name: Checks, Test and Run FRONTEND - Windows # define the name of job
-    # runs-on: windows-latest # define the machine where the code will run, Windows here   
-    # defaults:
-    #   run:
-    #     working-directory: ./frontend/
-
-    name: Checks, Test and Run FRONTEND - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    name: Checks, Test and Run FRONTEND - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here   
     defaults:
       run:
         working-directory: ./frontend/
+
+    # name: Checks, Test and Run FRONTEND - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    # defaults:
+    #   run:
+    #     working-directory: ./frontend/
 
     # name: Checks, Test and Run FRONTEND - Macos # define the name of job
     # runs-on: macos-latest # define the machine where the code will run, MacOS here
@@ -42,7 +42,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.11] # [3.9, 3.10, 3.11, 3.12]
+        python-version: [3.10] # [3.9, 3.10, 3.11, 3.12]
 
     steps:
       - name: checkout code 
@@ -54,17 +54,17 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
 
-      # - name: prepare python virtual environement - Windows
-      #   shell: pwsh
-      #   run: |
-      #     python -m venv venv
-      #     .\venv\Scripts\activate
-
-      - name: prepare python virtual environement - Linux  
-        shell: bash
+      - name: prepare python virtual environement - Windows
+        shell: pwsh
         run: |
           python -m venv venv
-          source venv/bin/activate
+          .\venv\Scripts\activate
+
+      # - name: prepare python virtual environement - Linux  
+      #   shell: bash
+      #   run: |
+      #     python -m venv venv
+      #     source venv/bin/activate
 
       - name: install and upgrade pip and tox - Windows
         shell: pwsh
