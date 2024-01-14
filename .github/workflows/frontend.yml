@@ -91,7 +91,8 @@ jobs:
       #     tox run
 
       - name: test and run frontend app - checks, test and run frontend app - Windows
-        shell: pwsh
+        # shell: pwsh
+        # shell: bash
         run: |
           tox run -e typechecks
           tox run -e stylechecks
