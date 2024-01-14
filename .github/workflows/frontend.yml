@@ -92,7 +92,7 @@ jobs:
 
       - name: test and run frontend app - checks, test and run frontend app - Windows
         # shell: pwsh
-        # shell: bash
+        shell: cmd
         run: |
           tox run -e typechecks
           tox run -e stylechecks
