@@ -80,23 +80,24 @@ jobs:
       #     python -m pip install --user tox
       #     python -m pip install --upgrade tox
 
-      - name: test and run frontend app - checks, test and run frontend app - Windows
-        shell: pwsh
-        run: |
-          tox run
+      # - name: test and run frontend app - checks, test and run frontend app - Windows
+      #   shell: pwsh
+      #   run: |
+      #     tox run
 
       # - name: test and run frontend app - checks, test and run frontend app - Linux
       #   shell: bash
       #   run: |
       #     tox run
 
-      # - name: test and run frontend app - checks, test and run frontend app - Windows
-      #   shell: pwsh
-      #   run: |
-      #     tox run -e typechecks
-      #     tox run -e stylechecks
-      #     tox run -e lint
-      #     tox run -e run_app
+      - name: test and run frontend app - checks, test and run frontend app - Windows
+        # shell: pwsh
+        # shell: bash
+        run: |
+          tox run -e typechecks
+          tox run -e stylechecks
+          tox run -e lint
+          tox run -e run_app
 
       # - name: test and run frontend app - checks, test and run frontend app - Linux
       #   shell: bash
