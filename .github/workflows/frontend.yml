@@ -22,17 +22,17 @@ on:
 # jobs you want to run
 jobs:
   ML-model-building-actions:
-    name: Checks, Test and Run FRONTEND - Windows # define the name of job
-    runs-on: windows-latest # define the machine where the code will run, Windows here   
-    defaults:
-      run:
-        working-directory: ./frontend/
-
-    # name: Checks, Test and Run FRONTEND - Linux # define the name of job
-    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    # name: Checks, Test and Run FRONTEND - Windows # define the name of job
+    # runs-on: windows-latest # define the machine where the code will run, Windows here   
     # defaults:
     #   run:
     #     working-directory: ./frontend/
+
+    name: Checks, Test and Run FRONTEND - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    defaults:
+      run:
+        working-directory: ./frontend/
 
     # name: Checks, Test and Run FRONTEND - Macos # define the name of job
     # runs-on: macos-latest # define the machine where the code will run, MacOS here
@@ -54,50 +54,49 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
 
-      - name: prepare python virtual environement - Windows
-        shell: pwsh
-        run: |
-          python -m venv venv
-          .\venv\Scripts\activate
-
-      # - name: prepare python virtual environement - Linux  
-      #   shell: bash
+      # - name: prepare python virtual environement - Windows
+      #   shell: pwsh
       #   run: |
       #     python -m venv venv
-      #     source venv/bin/activate
+      #     .\venv\Scripts\activate
 
-      - name: install and upgrade pip and tox - Windows
-        shell: pwsh
+      - name: prepare python virtual environement - Linux  
+        shell: bash
         run: |
-          python.exe -m pip install --upgrade pip
-          python.exe -m pip install --user tox
-          python.exe -m pip install --upgrade tox
+          python -m venv venv
+          source venv/bin/activate
 
-      # - name: install and upgrade pip and tox - Linux
-      #   shell: bash
+      # - name: install and upgrade pip and tox - Windows
+      #   shell: pwsh
       #   run: |
-      #     python -m pip install --upgrade pip
-      #     python -m pip install --user tox
-      #     python -m pip install --upgrade tox
+      #     python.exe -m pip install --upgrade pip
+      #     python.exe -m pip install --user tox
+      #     python.exe -m pip install --upgrade tox
+
+      - name: install and upgrade pip and tox - Linux
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --user tox
+          python -m pip install --upgrade tox
 
       # - name: test and run frontend app - checks, test and run frontend app - Windows
       #   shell: pwsh
       #   run: |
       #     tox run
 
-      # - name: test and run frontend app - checks, test and run frontend app - Linux
-      #   shell: bash
-      #   run: |
-      #     tox run
-
-      - name: test and run frontend app - checks, test and run frontend app - Windows
-        # shell: pwsh
-        # shell: cmd
+      - name: test and run frontend app - checks, test and run frontend app - Linux
+        shell: bash
         run: |
-          tox run -e typechecks
-          tox run -e stylechecks
-          tox run -e lint
-          tox run -e run_app
+          tox run
+
+      # - name: test and run frontend app - checks, test and run frontend app - Windows
+      #   shell: pwsh
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e run_app
 
       # - name: test and run frontend app - checks, test and run frontend app - Linux
       #   shell: bash
