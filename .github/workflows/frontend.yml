@@ -42,7 +42,13 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.12] # [3.9, 3.10, 3.11, 3.12]
+        python-version: [3.11] # [3.9, 3.10, 3.11, 3.12]
+        # os: [ubuntu-latest, macos-latest, windows-latest]
+        # exclude:
+        #   - os: macos-latest
+        #     python-version: [3.9, 3.10, 3.12] # "3.9"
+        #   - os: windows-latest
+        #     python-version: [3.9, 3.10, 3.12] # "3.9"
 
     steps:
       - name: checkout code 
@@ -52,7 +58,7 @@ jobs:
       - name: install python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{matrix.python-version}}
+          python-version: "3.11" # ${{matrix.python-version}}
 
       - name: prepare python virtual environement - Windows
         shell: pwsh
