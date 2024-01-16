@@ -75,7 +75,7 @@ jobs:
       - name: Push images into Docker Hub 
         uses: docker/build-push-action@v5
         with:
-          context: . 
+          context: ./api_docker
           dockerfile: Dockerfile 
           push: true 
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/api_image:latest
