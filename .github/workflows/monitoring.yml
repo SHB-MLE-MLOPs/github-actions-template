@@ -1,0 +1,107 @@
+# name of your CICD code
+name: Build MONITORING
+
+# # when or what event needs for begin running the code
+# on:
+#   push:
+#     branches:
+#       - main
+#       - 'releases/**'
+
+# when or what event needs for begin running the code
+on:
+  # push:
+  #   branches:
+  #     - monitoring_dev
+  pull_request:
+    branches:
+      - monitoring_main
+  # schedule: # frequence to launch actions. see this link https://crontab.guru/
+  #   - cron: "0 0 * * 1" # at 00:00 on Monday
+
+# jobs you want to run
+jobs:
+  ML-model-building-actions:
+    # name: Checks, Test and Run MONITORING - Windows # define the name of job
+    # runs-on: windows-latest # define the machine where the code will run, Windows here   
+    # defaults:
+    #   run:
+    #     working-directory: ./monitoring/
+
+    name: Checks, Test and Run MONITORING - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    defaults:
+      run:
+        working-directory: ./monitoring/
+
+    # name: Checks, Test and Run MONITORING - Macos # define the name of job
+    # runs-on: macos-latest # define the machine where the code will run, MacOS here
+    # defaults:
+    #   run:
+    #     working-directory: ./monitoring/
+
+    strategy:
+      matrix:
+        python-version: [3.11] # [3.9, 3.10, 3.11, 3.12]
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      # Here we begin CI (Continuous Integration)
+      - name: install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{matrix.python-version}}
+
+      # - name: prepare python virtual environement - Windows
+      #   shell: pwsh
+      #   run: |
+      #     python -m venv venv
+      #     .\venv\Scripts\activate
+
+      - name: prepare python virtual environement - Linux  
+        shell: bash
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+
+      # - name: install and upgrade pip and tox - Windows
+      #   shell: pwsh
+      #   run: |
+      #     python.exe -m pip install --upgrade pip
+      #     python.exe -m pip install --user tox
+      #     python.exe -m pip install --upgrade tox
+
+      - name: install and upgrade pip and tox - Linux
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --user tox
+          python -m pip install --upgrade tox
+
+      # - name: test and run monitoring app - checks, test and run monitoring app - Windows
+      #   shell: pwsh
+      #   run: |
+      #     tox run
+
+      - name: test and run monitoring app - checks, test and run monitoring app - Linux
+        shell: bash
+        run: |
+          tox run
+
+      # - name: test and run monitoring app - checks, test and run monitoring app - Windows
+      #   shell: pwsh
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e run_app
+
+      # - name: test and run monitoring app - checks, test and run monitoring app - Linux
+      #   shell: bash
+      #   run: |
+      #     tox run -e typechecks
+      #     tox run -e stylechecks
+      #     tox run -e lint
+      #     tox run -e run_app
