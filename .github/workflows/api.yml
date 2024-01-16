@@ -1,5 +1,5 @@
 # name of your CICD code
-name: Build API with docker
+name: Build docker images and docker compose
 
 # # when or what event needs for begin running the code
 # on:
