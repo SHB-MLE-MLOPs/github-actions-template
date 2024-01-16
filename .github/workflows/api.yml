@@ -22,16 +22,16 @@ on:
 # jobs you want to run
 jobs:
   API-docker-actions:
-    name: Run API - Windows # define the name of job
-    runs-on: windows-latest # define the machine where the code will run, Windows here   
+    # name: Run API - Windows # define the name of job
+    # runs-on: windows-latest # define the machine where the code will run, Windows here   
     # services:
     #   registry:
     #     image: registry:2
     #     ports:
     #       - 5000:5000
 
-    # name: Run API - Linux # define the name of job
-    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    name: Run API - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
     # services:
     #   registry:
     #     image: registry:2
