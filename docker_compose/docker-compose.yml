@@ -1,0 +1,336 @@
+services:
+  dataversioning_mysql_server: # name of 1st services
+    container_name: dataversioning_mysql_server_container # define the name of container for this service
+    image: dataversioning_mysql_server_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set the root password for MySQL (change it to a secure password)
+      ENV MYSQL_ROOT_PASSWORD: root_password
+      # Create a new database and user
+      ENV MYSQL_DATABASE: db_for_versioning
+      ENV MYSQL_USER: sbodjona
+      ENV MYSQL_PASSWORD: BUij44Nr1986
+      # Set the default character set and collation
+      ENV MYSQL_CHARSET: utf8mb4
+      ENV MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports: # to expose the container port
+      - "8181:3306"
+    volumes: # path to persist evriything we want
+      - dataversioning_mysql_server:/var/lib/mysql
+      #- postgres_server:/var/lib/postgres/data
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.1  # Assign a specific IP address
+
+  
+  buildmodel_mysql_server: # name of 1st services
+    container_name: buildmodel_mysql_server_container # define the name of container for this service
+    image: buildmodel_mysql_server_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set the root password for MySQL (change it to a secure password)
+      ENV MYSQL_ROOT_PASSWORD: root_password
+      # Create a new database and user
+      ENV MYSQL_DATABASE: db_for_build_mlmodel
+      ENV MYSQL_USER: sbodjona
+      ENV MYSQL_PASSWORD: BUij44Nr1986
+      # Set the default character set and collation
+      ENV MYSQL_CHARSET: utf8mb4
+      ENV MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports: # to expose the container port
+      - "8282:3306"
+    volumes: # path to persist evriything we want
+      - buildmodel_mysql_server:/var/lib/mysql
+      #- postgres_server:/var/lib/postgres/data
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.5  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if listed containers is finish to run
+      - dataversioning_mysql_server
+  
+  
+  retrainmodel_mysql_server: # name of 1st services
+    container_name: retrainmodel_mysql_server_container # define the name of container for this service
+    image: retrainmodel_mysql_server_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set the root password for MySQL (change it to a secure password)
+      ENV MYSQL_ROOT_PASSWORD: root_password
+      # Create a new database and user
+      ENV MYSQL_DATABASE: db_for_retrain_mlmodel
+      ENV MYSQL_USER: sbodjona
+      ENV MYSQL_PASSWORD: BUij44Nr1986
+      # Set the default character set and collation
+      ENV MYSQL_CHARSET: utf8mb4
+      ENV MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports: # to expose the container port
+      - "8383:3306"
+    volumes: # path to persist evriything we want
+      - retrainmodel_mysql_server:/var/lib/mysql
+      #- postgres_server:/var/lib/postgres/data
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.6  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if listed containers is finish to run
+      - dataversioning_mysql_server
+      - buildmodel_mysql_server
+  
+
+  apiuser_mysql_server: # name of 1st services
+    container_name: apiuser_mysql_server_container # define the name of container for this service
+    image: apiuser_mysql_server_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set the root password for MySQL (change it to a secure password)
+      ENV MYSQL_ROOT_PASSWORD: root_password
+      # Create a new database and user
+      ENV MYSQL_DATABASE: db_for_api_user
+      ENV MYSQL_USER: sbodjona
+      ENV MYSQL_PASSWORD: BUij44Nr1986
+      # Set the default character set and collation
+      ENV MYSQL_CHARSET: utf8mb4
+      ENV MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports: # to expose the container port
+      - "8484:3306"
+    volumes: # path to persist evriything we want
+      - apiuser_mysql_server:/var/lib/mysql
+      #- postgres_server:/var/lib/postgres/data
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.7  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if listed containers is finish to run
+      - dataversioning_mysql_server
+      - buildmodel_mysql_server
+      - retrainmodel_mysql_server
+  
+  
+  refdrift_mysql_server: # name of 1st services
+    container_name: refdrift_mysql_server_container # define the name of container for this service
+    image: refdrift_mysql_server_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set the root password for MySQL (change it to a secure password)
+      ENV MYSQL_ROOT_PASSWORD: root_password
+      # Create a new database and user
+      ENV MYSQL_DATABASE: db_for_ref_driftanalysis
+      ENV MYSQL_USER: sbodjona
+      ENV MYSQL_PASSWORD: BUij44Nr1986
+      # Set the default character set and collation
+      ENV MYSQL_CHARSET: utf8mb4
+      ENV MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports: # to expose the container port
+      - "8585:3306"
+    volumes: # path to persist evriything we want
+      - refdrift_mysql_server:/var/lib/mysql
+      #- postgres_server:/var/lib/postgres/data
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.8  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if listed containers is finish to run
+      - dataversioning_mysql_server
+      - buildmodel_mysql_server
+      - retrainmodel_mysql_server
+      - apiuser_mysql_server
+  
+  
+  newdrift_mysql_server: # name of 1st services
+    container_name: newdrift_mysql_server_container # define the name of container for this service
+    image: newdrift_mysql_server_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set the root password for MySQL (change it to a secure password)
+      ENV MYSQL_ROOT_PASSWORD: root_password
+      # Create a new database and user
+      ENV MYSQL_DATABASE: db_for_new_driftanalysis
+      ENV MYSQL_USER: sbodjona
+      ENV MYSQL_PASSWORD: BUij44Nr1986
+      # Set the default character set and collation
+      ENV MYSQL_CHARSET: utf8mb4
+      ENV MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports: # to expose the container port
+      - "8686:3306"
+    volumes: # path to persist evriything we want
+      - newdrift_mysql_server:/var/lib/mysql
+      #- postgres_server:/var/lib/postgres/data
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.9  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if listed containers is finish to run
+      - dataversioning_mysql_server
+      - buildmodel_mysql_server
+      - retrainmodel_mysql_server
+      - apiuser_mysql_server
+      - refdrift_mysql_server
+  
+  
+  mysql_phpmyadmin: # name of 1st services
+    container_name: phpmyadmin_container # define the name of container for this service
+    image: phpmyadmin_image # define the container image
+    restart: always
+    environment: # define environment variable
+      # Set environment variables for PHPMyAdmin configuration
+      ENV PMA_ARBITRARY: 1
+    ports: # to expose the container port
+      - "8080:80"
+    volumes: # path to persist evriything we want
+      - mysql_phpmyadmin:/var/lib/phpmyadmin
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.2  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if listed containers is finish to run
+      - dataversioning_mysql_server
+      - buildmodel_mysql_server
+      - retrainmodel_mysql_server
+      - apiuser_mysql_server
+      - refdrift_mysql_server
+      - newdrift_mysql_server
+  
+  
+  api_fastapi: #postgres: # name of 1st services
+    container_name: api_container # define the name of container for this service
+    image: api_image # define the container image
+    restart: always
+    ports: # to expose the container port
+      - "8001:8001"
+    volumes: # path to persist evriything we want
+      - api_fastapi:/var/lib/api
+    networks: # to make connection with anothers containers
+      all_instance_network: # network name
+        ipv4_address: 192.168.1.3  # Assign a specific IP address
+    depends_on: # to specify that this container will begin to run if "postgres" is finish to run
+      - mysql_phpmyadmin
+  
+  
+  frontend_streamlit_app: #spring-boot-app:
+    container_name: frontend_app_container
+    image: frontend_app_image
+    restart: always
+    ports:
+      - "8501:8501"
+    volumes: # path to persist evriything we want
+      - frontend_streamlit_app:/var/lib/frontend
+    networks:
+      all_instance_network: # network name must be the same in containers we want to connect 
+        ipv4_address: 192.168.1.4  # Assign a different IP address
+    depends_on: # to specify that this container will begin to run if "postgres" is finish to run
+      - api_fastapi
+  
+
+  monitoring_streamlit_app: #spring-boot-app:
+    container_name: monitoring_app_container
+    image: monitoring_app_image
+    restart: always
+    ports:
+      - "8888:8501"
+    volumes: # path to persist evriything we want
+      - monitoring_streamlit_app:/var/lib/monitoring
+    networks:
+      all_instance_network: # network name must be the same in containers we want to connect 
+        ipv4_address: 192.168.1.10  # Assign a different IP address
+    depends_on: # to specify that this container will begin to run if "postgres" is finish to run
+      - frontend_streamlit_app
+
+
+# to specify place in local device we want to persist trafic, data, ... on container 
+volumes:
+  dataversioning_mysql_server:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\dataversioning_mysql\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  buildmodel_mysql_server:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\buildmodel_mysql\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  retrainmodel_mysql_server:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\retrainmodel_mysql\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+
+  apiuser_mysql_server:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\apiuser_mysql\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  refdrift_mysql_server:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\refdrift_mysql\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  newdrift_mysql_server:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\newdrift_mysql\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+
+  mysql_phpmyadmin:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\phpmyadmin\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  api_fastapi:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\api\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  frontend_streamlit_app:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\frontend\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+  
+  monitoring_streamlit_app:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'C:\ProgramData\docker\volumes\monitoring\data' # for windows
+      # device: '/var/lib/docker/volumes' # for linux
+      # device: '/var/lib/docker/volumes' # for mac
+
+
+
+# networks make link between multiples containers
+networks: # This is the key indicating the start of the network configuration section in a Docker Compose file.
+  all_instance_network: # This is the name given to the network
+    driver: bridge # This specifies that the network is a bridge network wich allows containers to communicate with each other using container names as hostnames.
+    ipam: # This stands for IP Address Management. It allows you to specify the IP addressing configuration for the network.
+      driver: default # This specifies the default IPAM driver to be used. The default driver is sufficient for many use cases.
+      config: # This is where you define the IP address configuration for the network.
+        - subnet: 192.168.1.0/24 # This defines the subnet that will be used by the containers in this network. In this case, it's 192.168.1.0/24, which means the network can use IP addresses ranging from 192.168.1.1 to 192.168.1.254.
+          gateway: 192.168.1.254 # This specifies the gateway IP address for the network. The gateway is typically the first IP address in the subnet

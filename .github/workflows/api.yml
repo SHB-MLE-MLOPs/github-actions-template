@@ -8,7 +8,281 @@ on:
 
 # jobs you want to run
 jobs:
+  Dataversioning-server-docker-image-actions:
+    name: Run dataversioning server - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/dataversioning
+          file: ./data_base_docker/MySQL/dataversioning/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dataversioning_mysql_server_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/dataversioning
+          file: ./data_base_docker/MySQL/dataversioning/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dataversioning_mysql_server_image:latest
+
+  Buildmodel-server-docker-image-actions:
+    needs: Dataversioning-server-docker-image-actions
+    name: Run buildmodel server - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/buildmodel
+          file: ./data_base_docker/MySQL/buildmodel/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/buildmodel_mysql_server_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/buildmodel
+          file: ./data_base_docker/MySQL/buildmodel/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/buildmodel_mysql_server_image:latest
+
+  Retrainmodel-server-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions]
+    name: Run retrainmodel server - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/retrainmodel
+          file: ./data_base_docker/MySQL/retrainmodel/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/retrainmodel_mysql_server_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/retrainmodel
+          file: ./data_base_docker/MySQL/retrainmodel/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/retrainmodel_mysql_server_image:latest
+
+  Apiuser-server-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions]
+    name: Run apiuser server - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/apiuser
+          file: ./data_base_docker/MySQL/apiuser/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/apiuser_mysql_server_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/apiuser
+          file: ./data_base_docker/MySQL/apiuser/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/apiuser_mysql_server_image:latest
+
+  Refdrift-server-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, Apiuser-server-docker-image-actions]
+    name: Run refdrift server - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/refdrift
+          file: ./data_base_docker/MySQL/refdrift/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/refdrift_mysql_server_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/refdrift
+          file: ./data_base_docker/MySQL/refdrift/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/refdrift_mysql_server_image:latest
+
+  Newdrift-server-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions,
+      Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions]
+    name: Run newdrift server - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/newdrift
+          file: ./data_base_docker/MySQL/newdrift/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/newdrift_mysql_server_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./data_base_docker/MySQL/newdrift
+          file: ./data_base_docker/MySQL/newdrift/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/newdrift_mysql_server_image:latest
+
+  Phpmyadmin-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions]
+    name: Run phpmyadmin app - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./graphic_interface_docker
+          file: ./graphic_interface_docker/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/phpmyadmin_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./graphic_interface_docker
+          file: ./graphic_interface_docker/Dockerfile
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/phpmyadmin_image:latest
+
   API-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions]
     name: Run API - Linux # define the name of job
     runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
@@ -45,3 +319,81 @@ jobs:
           file: ./api_docker/Dockerfile 
           push: true 
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/api_image:latest
+
+  Frontend-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions, API-docker-image-actions]
+    name: Run Frontend app - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend_docker
+          file: ./frontend_docker/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/frontend_app_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend_docker
+          file: ./frontend_docker/Dockerfile 
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/frontend_app_image:latest
+
+  Monitoring-docker-image-actions:
+    needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions, API-docker-image-actions, Frontend-docker-image-actions]
+    name: Run Monitoring app - Linux # define the name of job
+    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      - name: Build base image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./monitoring_docker
+          file: ./monitoring_docker/Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/monitoring_app_image:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push images into Docker Hub 
+        uses: docker/build-push-action@v5
+        with:
+          context: ./monitoring_docker
+          file: ./monitoring_docker/Dockerfile 
+          push: true 
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/monitoring_app_image:latest
