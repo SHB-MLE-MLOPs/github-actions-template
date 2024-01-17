@@ -28,7 +28,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./api_docker
-          file: ./api_docker/Dockerfile
+          platforms: linux/amd64, linux/arm64
+          file: Dockerfile
           push: false
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/api_image:latest
 
@@ -42,6 +43,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./api_docker
-          dockerfile: Dockerfile 
+          platforms: linux/amd64, linux/arm64
+          file: Dockerfile 
           push: true 
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/api_image:latest
