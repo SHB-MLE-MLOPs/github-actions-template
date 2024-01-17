@@ -1,0 +1,38 @@
+services:
+  api_fastapi: #postgres: # name of 1st services
+    container_name: container_api_image # define the name of container for this service
+    image: api_image # define the container image
+    restart: always
+    #environment: # define environment variable
+    #  POSTGRESS_USER: username
+    #  POSTGRESS_PASSWORD: password
+    #  POSTGRESS_DB: demo_db # create database by default
+    ports: # to expose the container port
+      - "8001:8001"
+    volumes: # path to persist evriything we want
+      - api_fastapi:/var/lib/api_fastapi/data
+    networks: # to make connection with anothers containers
+      - api_frontend_network # network name 
+  
+  frontend_streamlit_app: #spring-boot-app:
+    container_name: container_frontend_app_image
+    image: frontend_app_image
+    restart: always
+    ports:
+      - "8501:8501"
+    volumes: # path to persist evriything we want
+      - frontend_streamlit_app:/var/lib/frontend_streamlit_app/data
+    networks:
+      - api_frontend_network # network name must be the same in containers we want to connect 
+    depends_on: # to specify that this container will begin to run if "postgres" is finish to run
+      - api_fastapi
+
+# to specify place we want to persist trafic, data, ... on container 
+volumes:
+  api_fastapi:
+  frontend_streamlit_app:
+
+# networks make link between multiples containers
+networks:
+  api_frontend_network:
+    driver: bridge
