@@ -263,7 +263,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./graphic_interface_docker
-          file: ./graphic_interface_docker/Dockerfile
+          file: ./graphic_interface_docker/MySQL/Dockerfile
           push: false
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/phpmyadmin_image:latest
 
@@ -277,7 +277,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./graphic_interface_docker
-          file: ./graphic_interface_docker/Dockerfile
+          file: ./graphic_interface_docker/MySQL/Dockerfile
           push: true 
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/phpmyadmin_image:latest
 
