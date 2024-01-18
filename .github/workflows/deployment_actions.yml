@@ -430,6 +430,11 @@ jobs:
       #   run: |
       #     .\clean_restart_docker_Instance.ps1
 
+      - name: Grant execute permissions to the script
+        shell: bash
+        run: |
+          chmod +x ./clean_restart_docker_Instance.sh
+
       - name: Run docker compose
         shell: bash
         run: |
