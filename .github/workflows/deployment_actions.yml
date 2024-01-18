@@ -416,4 +416,5 @@ jobs:
         uses: actions/checkout@v4 # define action to run at the step "checkout code", action can bee found on https://github.com/marketplace/actions
 
       - name: Run docker compose
-        run: ./docker_compose/clean_restart_docker_Instance.ps1
+        working-directory: ./docker_compose
+        run: .\clean_restart_docker_Instance.ps1
