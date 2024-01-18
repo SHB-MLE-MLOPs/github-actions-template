@@ -1,7 +1,7 @@
 services:
   dataversioning_mysql_server: # name of 1st services
     container_name: dataversioning_mysql_server_container # define the name of container for this service
-    image: dataversioning_mysql_server_image # define the container image
+    image: sbodjonadocker/dataversioning_mysql_server_image # define the container image
     restart: always
     environment: # define environment variable
       # Set the root password for MySQL (change it to a secure password)
@@ -25,7 +25,7 @@ services:
   
   buildmodel_mysql_server: # name of 1st services
     container_name: buildmodel_mysql_server_container # define the name of container for this service
-    image: buildmodel_mysql_server_image # define the container image
+    image: sbodjonadocker/buildmodel_mysql_server_image # define the container image
     restart: always
     environment: # define environment variable
       # Set the root password for MySQL (change it to a secure password)
@@ -51,7 +51,7 @@ services:
   
   retrainmodel_mysql_server: # name of 1st services
     container_name: retrainmodel_mysql_server_container # define the name of container for this service
-    image: retrainmodel_mysql_server_image # define the container image
+    image: sbodjonadocker/retrainmodel_mysql_server_image # define the container image
     restart: always
     environment: # define environment variable
       # Set the root password for MySQL (change it to a secure password)
@@ -78,7 +78,7 @@ services:
 
   apiuser_mysql_server: # name of 1st services
     container_name: apiuser_mysql_server_container # define the name of container for this service
-    image: apiuser_mysql_server_image # define the container image
+    image: sbodjonadocker/apiuser_mysql_server_image # define the container image
     restart: always
     environment: # define environment variable
       # Set the root password for MySQL (change it to a secure password)
@@ -106,7 +106,7 @@ services:
   
   refdrift_mysql_server: # name of 1st services
     container_name: refdrift_mysql_server_container # define the name of container for this service
-    image: refdrift_mysql_server_image # define the container image
+    image: sbodjonadocker/refdrift_mysql_server_image # define the container image
     restart: always
     environment: # define environment variable
       # Set the root password for MySQL (change it to a secure password)
@@ -135,7 +135,7 @@ services:
   
   newdrift_mysql_server: # name of 1st services
     container_name: newdrift_mysql_server_container # define the name of container for this service
-    image: newdrift_mysql_server_image # define the container image
+    image: sbodjonadocker/newdrift_mysql_server_image # define the container image
     restart: always
     environment: # define environment variable
       # Set the root password for MySQL (change it to a secure password)
@@ -165,7 +165,7 @@ services:
   
   mysql_phpmyadmin: # name of 1st services
     container_name: phpmyadmin_container # define the name of container for this service
-    image: phpmyadmin_image # define the container image
+    image: sbodjonadocker/phpmyadmin_image # define the container image
     restart: always
     environment: # define environment variable
       # Set environment variables for PHPMyAdmin configuration
@@ -188,7 +188,7 @@ services:
   
   api_fastapi: #postgres: # name of 1st services
     container_name: api_container # define the name of container for this service
-    image: api_image # define the container image
+    image: sbodjonadocker/api_image # define the container image
     restart: always
     ports: # to expose the container port
       - "8001:8001"
@@ -203,7 +203,7 @@ services:
   
   frontend_streamlit_app: #spring-boot-app:
     container_name: frontend_app_container
-    image: frontend_app_image
+    image: sbodjonadocker/frontend_app_image
     restart: always
     ports:
       - "8501:8501"
@@ -218,7 +218,7 @@ services:
 
   monitoring_streamlit_app: #spring-boot-app:
     container_name: monitoring_app_container
-    image: monitoring_app_image
+    image: sbodjonadocker/monitoring_app_image
     restart: always
     ports:
       - "8888:8501"
