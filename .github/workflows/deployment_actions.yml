@@ -433,4 +433,4 @@ jobs:
       - name: Run docker compose
         shell: bash
         run: |
-          .\clean_restart_docker_Instance.ps1
+          ./clean_restart_docker_Instance.sh
