@@ -240,7 +240,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\dataversioning_mysql\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   buildmodel_mysql_server:
     driver: local
@@ -249,7 +249,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\buildmodel_mysql\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   retrainmodel_mysql_server:
     driver: local
@@ -258,7 +258,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\retrainmodel_mysql\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
 
   apiuser_mysql_server:
     driver: local
@@ -267,7 +267,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\apiuser_mysql\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   refdrift_mysql_server:
     driver: local
@@ -276,7 +276,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\refdrift_mysql\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   newdrift_mysql_server:
     driver: local
@@ -285,7 +285,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\newdrift_mysql\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
 
   mysql_phpmyadmin:
     driver: local
@@ -294,7 +294,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\phpmyadmin\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   api_fastapi:
     driver: local
@@ -303,7 +303,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\api\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   frontend_streamlit_app:
     driver: local
@@ -312,7 +312,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\frontend\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
   
   monitoring_streamlit_app:
     driver: local
@@ -321,7 +321,7 @@ volumes:
       o: 'bind'
       # device: 'C:\ProgramData\docker\volumes\monitoring\data' # for windows
       device: '/github/home/var/lib/docker/volumes' # for linux
-      # device: '/var/lib/docker/volumes' # for mac
+      # device: '/github/home/var/lib/docker/volumes' # for mac
 
 
 
