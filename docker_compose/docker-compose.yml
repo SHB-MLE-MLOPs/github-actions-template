@@ -16,7 +16,7 @@ services:
     ports: # to expose the container port
       - "8181:3306"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/dataversioning_mysql_server:/github/home/var/lib/mysql
+      - /github/workspace/dataversioning_mysql_server:/github/home/var/lib/mysql
       #- postgres_server:/var/lib/postgres/data
     networks: # to make connection with anothers containers
       all_instance_network: # network name
@@ -40,7 +40,7 @@ services:
     ports: # to expose the container port
       - "8282:3306"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/buildmodel_mysql_server:/github/home/var/lib/mysql
+      - /github/workspace/buildmodel_mysql_server:/github/home/var/lib/mysql
       #- postgres_server:/var/lib/postgres/data
     networks: # to make connection with anothers containers
       all_instance_network: # network name
@@ -66,7 +66,7 @@ services:
     ports: # to expose the container port
       - "8383:3306"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/retrainmodel_mysql_server:/github/home/var/lib/mysql
+      - /github/workspace/retrainmodel_mysql_server:/github/home/var/lib/mysql
       #- postgres_server:/var/lib/postgres/data
     networks: # to make connection with anothers containers
       all_instance_network: # network name
@@ -93,7 +93,7 @@ services:
     ports: # to expose the container port
       - "8484:3306"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/apiuser_mysql_server:/github/home/var/lib/mysql
+      - /github/workspace/apiuser_mysql_server:/github/home/var/lib/mysql
       #- postgres_server:/var/lib/postgres/data
     networks: # to make connection with anothers containers
       all_instance_network: # network name
@@ -121,7 +121,7 @@ services:
     ports: # to expose the container port
       - "8585:3306"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/refdrift_mysql_server:/github/home/var/lib/mysql
+      - /github/workspace/refdrift_mysql_server:/github/home/var/lib/mysql
       #- postgres_server:/var/lib/postgres/data
     networks: # to make connection with anothers containers
       all_instance_network: # network name
@@ -150,7 +150,7 @@ services:
     ports: # to expose the container port
       - "8686:3306"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/newdrift_mysql_server:/github/home/var/lib/mysql
+      - /github/workspace/newdrift_mysql_server:/github/home/var/lib/mysql
       #- postgres_server:/var/lib/postgres/data
     networks: # to make connection with anothers containers
       all_instance_network: # network name
@@ -173,7 +173,7 @@ services:
     ports: # to expose the container port
       - "8080:80"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/mysql_phpmyadmin:/github/home/var/lib/phpmyadmin
+      - /github/workspace/mysql_phpmyadmin:/github/home/var/lib/phpmyadmin
     networks: # to make connection with anothers containers
       all_instance_network: # network name
         ipv4_address: 192.168.1.2  # Assign a specific IP address
@@ -193,7 +193,7 @@ services:
     ports: # to expose the container port
       - "8001:8001"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/api_fastapi:/github/home/var/lib/api
+      - /github/workspace/api_fastapi:/github/home/var/lib/api
     networks: # to make connection with anothers containers
       all_instance_network: # network name
         ipv4_address: 192.168.1.3  # Assign a specific IP address
@@ -208,7 +208,7 @@ services:
     ports:
       - "8501:8501"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/frontend_streamlit_app:/github/home/var/lib/frontend
+      - /github/workspace/frontend_streamlit_app:/github/home/var/lib/frontend
     networks:
       all_instance_network: # network name must be the same in containers we want to connect 
         ipv4_address: 192.168.1.4  # Assign a different IP address
@@ -223,7 +223,7 @@ services:
     ports:
       - "8888:8501"
     volumes: # path to persist evriything we want
-      - ${{ github.workspace }}/monitoring_streamlit_app:/github/home/var/lib/monitoring
+      - /github/workspace/monitoring_streamlit_app:/github/home/var/lib/monitoring
     networks:
       all_instance_network: # network name must be the same in containers we want to connect 
         ipv4_address: 192.168.1.10  # Assign a different IP address
