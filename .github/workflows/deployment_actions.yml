@@ -9,8 +9,11 @@ on:
 # jobs you want to run
 jobs:
   Dataversioning-server-docker-image-actions:
-    name: Run dataversioning server - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    name: Run dataversioning server - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run dataversioning server - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -48,8 +51,12 @@ jobs:
 
   Buildmodel-server-docker-image-actions:
     needs: Dataversioning-server-docker-image-actions
-    name: Run buildmodel server - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    name: Run buildmodel server - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run buildmodel server - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -87,8 +94,12 @@ jobs:
 
   Retrainmodel-server-docker-image-actions:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions]
-    name: Run retrainmodel server - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+
+    name: Run retrainmodel server - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run retrainmodel server - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -126,8 +137,12 @@ jobs:
 
   Apiuser-server-docker-image-actions:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions]
-    name: Run apiuser server - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run api server - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run apiuser server - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -165,8 +180,12 @@ jobs:
 
   Refdrift-server-docker-image-actions:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, Apiuser-server-docker-image-actions]
-    name: Run refdrift server - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run redrift server - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run refdrift server - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -205,8 +224,12 @@ jobs:
   Newdrift-server-docker-image-actions:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions,
       Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions]
-    name: Run newdrift server - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run newdrift server - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run newdrift server - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -245,8 +268,12 @@ jobs:
   Phpmyadmin-docker-image-actions:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, 
       Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions]
-    name: Run phpmyadmin app - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run phpmyadmin app - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run phpmyadmin app - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -285,8 +312,12 @@ jobs:
   API-docker-image-actions:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, 
       Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions]
-    name: Run API - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run API - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run API - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -326,8 +357,12 @@ jobs:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, 
       Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions, 
       API-docker-image-actions]
-    name: Run Frontend app - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run Frontend app - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run Frontend app - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -367,8 +402,12 @@ jobs:
     needs: [Dataversioning-server-docker-image-actions, Buildmodel-server-docker-image-actions, Retrainmodel-server-docker-image-actions, 
       Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions, 
       API-docker-image-actions, Frontend-docker-image-actions]
-    name: Run Monitoring app - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
+    
+    name: Run Monitoring app - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here
+
+    # name: Run Monitoring app - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here  
 
     steps:
       - name: checkout code 
@@ -409,17 +448,17 @@ jobs:
       Apiuser-server-docker-image-actions, Refdrift-server-docker-image-actions, Newdrift-server-docker-image-actions, Phpmyadmin-docker-image-actions, 
       API-docker-image-actions, Frontend-docker-image-actions, Monitoring-docker-image-actions]
 
-    # name: Checks, Test and Run API - Windows # define the name of job
-    # runs-on: windows-latest # define the machine where the code will run, Windows here   
-    # defaults:
-    #   run:
-    #     working-directory: ./docker_compose/
-
-    name: Run Docker compose - Linux # define the name of job
-    runs-on: ubuntu-latest # define the machine where the code will run, Lunix here
+    name: Checks, Test and Run API - Windows # define the name of job
+    runs-on: windows-latest # define the machine where the code will run, Windows here   
     defaults:
       run:
-        working-directory: ./docker_compose/ 
+        working-directory: .\docker_compose\
+
+    # name: Run Docker compose - Linux # define the name of job
+    # runs-on: ubuntu-latest # define the machine where the code will run, Lunix here
+    # defaults:
+    #   run:
+    #     working-directory: ./docker_compose/ 
 
     steps:
       - name: checkout code 
@@ -431,17 +470,22 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      # - name: Run docker compose
-      #   shell: pwsh
-      #   run: |
-      #     .\clean_restart_docker_Instance.ps1
-
       - name: Grant execute permissions to the script
-        shell: bash
+        shell: pwsh
         run: |
-          chmod +x ./clean_restart_docker_Instance.sh
-
+          icacls +x .\clean_restart_docker_Instance.ps1
+      
       - name: Run docker compose
-        shell: bash
+        shell: pwsh
         run: |
-          ./clean_restart_docker_Instance.sh
+          .\clean_restart_docker_Instance.ps1
+
+      # - name: Grant execute permissions to the script
+      #   shell: bash
+      #   run: |
+      #     chmod +x ./clean_restart_docker_Instance.sh
+
+      # - name: Run docker compose
+      #   shell: bash
+      #   run: |
+      #     ./clean_restart_docker_Instance.sh
